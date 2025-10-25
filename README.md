@@ -1,3 +1,7 @@
+# Archiecture
+
+![My Image](todolist-elastic-beanstalk.png)
+
 ## Note 
 
 Clone this repo
