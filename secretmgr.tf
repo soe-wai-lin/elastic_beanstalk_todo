@@ -21,7 +21,7 @@ resource "aws_secretsmanager_secret_version" "rds_secret_version" {
   secret_string = jsonencode({
     username = data.aws_db_instance.mysql_rds.master_username
     # password = random_password.rds_password.result
-    password = "153709Swl$%"
+    password = var.db_password
     engine   = data.aws_db_instance.mysql_rds.engine
     host     = data.aws_db_instance.mysql_rds.address
     port     = data.aws_db_instance.mysql_rds.port

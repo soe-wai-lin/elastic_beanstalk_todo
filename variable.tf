@@ -13,6 +13,10 @@ variable "vpc_name" {
   default = "todolist-EB-vpc"
 }
 
+variable "instance_type" {
+  default = "t2.micro"
+}
+
 variable "vpc_cidr_block" {
   default = "10.5.0.0/16"
   type    = string
@@ -54,20 +58,43 @@ variable "asg_min" {
 }
 
 variable "asg_max" {
-  default = 2
+  default = 1
   type    = number
 }
 
 variable "asg_desired_capacity" {
-  default = 2
+  default = 1
   type    = number
 }
 
 variable "scrmgr_name" {
-  default     = "scr4"
+  default     = "scr6"
   description = "Secret Manger name"
 }
 
+variable "db_identifier" {
+  default = "tododb"
+}
+
+variable "db_name" {
+  default = "todo"
+}
+
+variable "engine" {
+  default = "mysql"
+}
+
+variable "db_instance_class" {
+  default = "db.t3.micro"  
+}
+
+variable "db_username" {
+  default = "swl"
+}
+
+variable "db_password" {
+  default = "123709Asd$%"
+}
 
 # variable "env_vars" {
 #   type        = map(string)

@@ -89,7 +89,7 @@ resource "aws_elastic_beanstalk_environment" "example" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "InstanceType"
-    value     = "t3.micro"
+    value     = var.instance_type
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
