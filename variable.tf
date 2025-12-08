@@ -68,7 +68,7 @@ variable "asg_desired_capacity" {
 }
 
 variable "scrmgr_name" {
-  default     = "scr6"
+  default     = "scr01"
   description = "Secret Manger name"
 }
 
