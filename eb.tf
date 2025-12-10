@@ -3,7 +3,7 @@ resource "aws_elastic_beanstalk_application" "todo" {
   description = "Todo-List-EB-App"
 
   appversion_lifecycle {
-    service_role          = aws_iam_role.aws-elasticbeanstalk-service-role.arn
+    service_role = aws_iam_role.aws-elasticbeanstalk-service-role.arn
   }
 }
 
@@ -28,12 +28,12 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 resource "aws_elastic_beanstalk_environment" "example" {
   name                = "Todo-List-EB-App-env"
   application         = aws_elastic_beanstalk_application.todo.name
-  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.php_al2023.name 
+  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.php_al2023.name
 
 
-# Use this application version
-  version_label       = aws_elastic_beanstalk_application_version.default.name
-  tier                = "WebServer"
+  # Use this application version
+  version_label = aws_elastic_beanstalk_application_version.default.name
+  tier          = "WebServer"
 
   # ---- Load balancer: ALB ----
   setting {
@@ -42,7 +42,7 @@ resource "aws_elastic_beanstalk_environment" "example" {
     value     = "application"
   }
 
-# Attach ALB security groups (use elbv2 namespace, not classic ELB)
+  # Attach ALB security groups (use elbv2 namespace, not classic ELB)
   setting {
     namespace = "aws:elbv2:loadbalancer"
     name      = "SecurityGroups"
@@ -68,19 +68,19 @@ resource "aws_elastic_beanstalk_environment" "example" {
     name      = "Subnets"
     # value     = join(",", var.instance_subnet_ids)
     value = join(",", [
-        aws_subnet.terra_vpc_priv_01.id,
-        aws_subnet.terra_vpc_priv_02.id
+      aws_subnet.terra_vpc_priv_01.id,
+      aws_subnet.terra_vpc_priv_02.id
     ])
 
   }
 
-# Load balancer subnets
+  # Load balancer subnets
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = join(",", [
-        aws_subnet.terra_vpc_pub_01.id,
-        aws_subnet.terra_vpc_pub_02.id
+    value = join(",", [
+      aws_subnet.terra_vpc_pub_01.id,
+      aws_subnet.terra_vpc_pub_02.id
     ])
 
   }
@@ -97,7 +97,7 @@ resource "aws_elastic_beanstalk_environment" "example" {
     value     = "Todo-EB-SM-IAM-Role"
   }
 
-# Attach instance security groups
+  # Attach instance security groups
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
@@ -123,11 +123,11 @@ resource "aws_elastic_beanstalk_environment" "example" {
     value     = "basic"
   }
 
-#   setting {
-#     namespace = "aws:elasticbeanstalk:command"
-#     name      = "DeploymentPolicy"
-#     value     = "Rolling"
-#   }
+  #   setting {
+  #     namespace = "aws:elasticbeanstalk:command"
+  #     name      = "DeploymentPolicy"
+  #     value     = "Rolling"
+  #   }
   setting {
     namespace = "aws:elasticbeanstalk:environment:process:default"
     name      = "HealthCheckPath"
@@ -149,33 +149,33 @@ resource "aws_elastic_beanstalk_environment" "example" {
   # ---- Application environment variables ----
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name = "SECRET_NAME"
-    value = aws_secretsmanager_secret.scrmgr.name
+    name      = "SECRET_NAME"
+    value     = aws_secretsmanager_secret.scrmgr.name
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name = "DB_ENDPOINT"
-    value = aws_db_instance.mysql_rds.address
+    name      = "DB_ENDPOINT"
+    value     = aws_db_instance.mysql_rds.address
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
-    name = "DB_NAME"
-    value = aws_db_instance.mysql_rds.db_name
+    name      = "DB_NAME"
+    value     = aws_db_instance.mysql_rds.db_name
   }
 
-# # ---- Application environment variables ----
-#   dynamic "setting" {
-#     for_each = var.env_vars
-#     content {
-#       namespace = "aws:elasticbeanstalk:application:environment"
-#       name      = setting.key
-#       value     = setting.value
-#     }
-#   }
+  # # ---- Application environment variables ----
+  #   dynamic "setting" {
+  #     for_each = var.env_vars
+  #     content {
+  #       namespace = "aws:elasticbeanstalk:application:environment"
+  #       name      = setting.key
+  #       value     = setting.value
+  #     }
+  #   }
 
-#   tags = var.tags
+  #   tags = var.tags
 
 }
 
@@ -183,5 +183,5 @@ resource "aws_elastic_beanstalk_environment" "example" {
 data "aws_elastic_beanstalk_solution_stack" "php_al2023" {
   most_recent = true
   # Example: "64bit Amazon Linux 2023 v4.x.x running PHP 8.2"
-  name_regex  = "^64bit Amazon Linux 2023 .* running PHP 8.3$"
+  name_regex = "^64bit Amazon Linux 2023 .* running PHP 8.3$"
 }

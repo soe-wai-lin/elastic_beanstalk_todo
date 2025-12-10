@@ -68,7 +68,7 @@ variable "asg_desired_capacity" {
 }
 
 variable "scrmgr_name" {
-  default     = "scr01"
+  default     = "scr02"
   description = "Secret Manger name"
 }
 
@@ -85,7 +85,7 @@ variable "engine" {
 }
 
 variable "db_instance_class" {
-  default = "db.t3.micro"  
+  default = "db.t3.micro"
 }
 
 variable "db_username" {
